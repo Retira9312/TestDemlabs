@@ -1,0 +1,402 @@
+====== Welcome to Cellframe node CLI commands ======
+
+----
+If you want to see a list of available commands, you should type in the following command:
+
+<code>cellframe-node-cli help</code>
+
+But if you need help for a specific command, you should type "cellframe-node-cli help "your command".
+
+----
+====dag: DAG commands====
+
+If you need a chain lists, you can find it in etc\network\core-t folder (zerochain and plazma now).
+
+<code>cellframe-node-cli dag -net home21-network -chain pos event list -from round.new
+home21-network.pos: Found 0 records :</code>
+You can get events from chains with poa and pos consensus.
+
+But if you try get events from none consensus you can get error from cellframe-node-cli.
+
+===Below are the successful and unsuccessful options for obtaining events:===
+
+<code>cellframe-node-cli dag -net home21-network -chain poa event list -from events
+home21-network.poa: Have 51 events :
+        0xD1B79C23A9137D2AF1C8E9FECB344DF2F18F599A6E97A810CBB6E98B3C71F39B: ts_create=Tue Nov 16 09:25:47 2021
+        0x681E1A416B01C1430182941C0718592DD3FF2A6474BA59B54E838BFC5FBD5F34: ts_create=Tue Nov 16 12:41:49 2021
+        0xF84DB5D32518659BF61725FB50958C116EFE2B28817C9DC776F21F1C5E457E87: ts_create=Tue Nov 16 12:41:50 2021
+        0x3EDB61E831DB139C1B1CFEDD5903D37A409A23C6516A741EACF100E2F9A7FF9A: ts_create=Tue Nov 16 12:41:50 2021</code>
+
+<code>cellframe-node-cli dag -net home21-network -chain pos event list -from events
+home21-network.pos: Have 1 events :
+0xF042045F2C9A732FBC6209757B339209899FEF4A8DAFC1607650276B6F8F00AC: ts_create=Tue Nov 16 12:41:55 2021</code>
+
+<code>cellframe-node-cli dag -net core-t -chain zerochain event dump -from events_lasts
+Can't find event (null) in events_last table</code>
+
+<code>cellframe-node-cli dag -net core-t -chain zerochain event list -from events
+core-t.zerochain: Have 0 events :</code>
+
+<code>cellframe-node-cli dag -net home21-network -chain poc event list -from round.new
+home21-network.poc: Found 2 records :
+        0x75470E3790C034FCF107C8FE227A6A0E356FCF0157D836EEEF096B057EB9F71B: ts_create=Wed Jan 12 10:34:36 2022
+        0x28E9CE7C799F9DF2275CC2210E485F415E9B184497BE66BC8A21D5FD2891EF1C: ts_create=Wed Jan 12 10:35:00 2022</code>
+
+<code>cellframe-node-cli dag -net home21-network -chain poc round complete
+Completing round:
+Event 0x75470E3790C034FCF107C8FE227A6A0E356FCF0157D836EEEF096B057EB9F71B verification passed
+Event 0x75470E3790C034FCF107C8FE227A6A0E356FCF0157D836EEEF096B057EB9F71B added in chain successfully
+Event 0x28E9CE7C799F9DF2275CC2210E485F415E9B184497BE66BC8A21D5FD2891EF1C verification passed
+Event 0x28E9CE7C799F9DF2275CC2210E485F415E9B184497BE66BC8A21D5FD2891EF1C added in chain successfully</code>
+
+<code>cellframe-node-cli dag -net home21-network -chain poc event dump -event 0x29657C4CBDBCE45227B090216CE2C83391106FB7725C8B149825D551EC664F56 -from round.new
+
+Event 0x29657C4CBDBCE45227B090216CE2C83391106FB7725C8B149825D551EC664F56:
+                                confirmations_minimum:2
+                                confirmations_timeout:300
+                Header:
+                                version: 0x00
+                                chain_id: 0x0000000000000001
+                                ts_created: Wed Jan 12 10:34:36 2022
+
+                                hashes: count: 0
+                                datum:  datum_size: 3426
+                                                version:=0x00
+                                                ts_create=Wed Jan 12 10:34:33 2022
+
+                                                data_size=3411
+                                signs:  count: 1
+                                                type: sig_dil   addr: rMcg8v2uM2b71q9sUcybUPJSmQLzcwaR51KFk7N73Ss76iN5VuiiT8KsjmfB3T6BCqeYsvrNkGSqLCxqp5TULbeddVmyUXVS78tgpviR
+ticker: TKN_DIL_M
+size: 3411
+type: SIMPLE
+sign_total: 1
+sign_valid: 1</code>
+
+----
+
+====dag_poa: DAG PoA commands====
+
+If you have mempool auto proc enabled you can have message, that round.new is empty:
+
+<code>cellframe-node-cli dag_poa -net home21-network -chain poc event sign -event 0xD2FD03289E101C920166F0E6565A16FE5A29EA28F61974E8CC7147D568819947
+Added new sign with cert "cert_event01", event 0x77F9F5B6C790418F339D4CA6FAC3BC69AA4A9B10B4EEF3026C76C40B92EC5FB9 placed back in round.new</code>
+
+----
+
+====exit: Stop application and exit====
+
+To my regret, I could not re-deploy the project, so let's imagine that there is a wonderful example
+
+{{:example_1_.jpg?400|}}
+
+----
+
+====gdb_export: Export gdb to JSON====
+
+You can see how the export to json works with an example:
+
+<code>cellframe-node-cli gdb_export filename gdb.db
+Database with name "gdb.db" will be created in var\lib\global_db folder, if you don't spicify absolute path</code>
+
+====gdb_import: Import gdb from JSON====
+
+There is also no example here, so look at the kitty.
+
+{{:котёнок1_1_.jpg?400|}}
+
+----
+
+====global_db: Work with global database====
+
+Example:
+
+<code>cellframe-node-cli global_db flush
+Commit data base and filesystem caches to disk completed.</code>
+
+====help: Description of command parameters====
+
+Symbol ?:   synonym for "help"
+
+----
+
+====ledger: Ledger info====
+
+If you want get list of tokens inside ledger, you should now this command.
+
+<code>cellframe-node-cli ledger list couns -net home21-network
+cellframe-node-cli ledger list couns_cond -net home21-network
+cellframe-node-cli ledger list addr -net home21-network
+
+Found 52 tokens in home21-network ledger
+Token name '1', type UNKNOWN, flags 0
+        Supply (current/total) 0/5000
+        Auth signs (valid/total) 0/0
+        Total emissions 1
+Token name '2', type UNKNOWN, flags 0
+        Supply (current/total) 0/5000
+        Auth signs (valid/total) 0/0
+        Total emissions 1
+Token name '3', type UNKNOWN, flags 0
+        Supply (current/total) 0/5000
+        Auth signs (valid/total) 0/0
+        Total emissions 1</code>
+        
+Get detailed list of all datums:
+
+<code>cellframe-node-cli ledger tx -all -net home21-network
+
+transaction: (emit) hash: 5ia9bZdtWymnKgyNMMCGwseiA2X2LafRmfHjCkJxfJ1U
+ TS Created: Thu Jan 01 03:00:00 1970
+ Token ticker: home21PS
+ Items:
+         TOKEN:
+                 ticker: home21PS
+                 token_emission_hash: 0x4EE27ECFA44323F8B52428311636662A49D44663E475B86EECD0F5CA16A4FC25
+                 token_emission_chain_id: 0x0000000000000000
+         IN:
+Tx_prev_hash: 0x46150AAB1064571C3C83DE5193CC7B346DE288D34C7F8B7057062AABA546C1BF
+                 Tx_out_prev_idx: 0
+         OUT:
+                 Value: 150.000000000 (150000000000)
+                 Address: rMcg8v2uM2b71q9sXfNbawQQVHqberHc8cnPypBH9F5b7scW3b4HX6X61qVsXnBDKAAXAKEq9NnR4GrahrHjcxhhZtBCZHN7vR1GMKDn
+         SIG:
+         sig_size: 3463
+Signature:
+        Type: sig_dil
+        Public key hash: 0x75C434D4CD155CD7550A8AED0100DC87B4B14C37E4E974B8EEBC4259D8674F50
+        Public key size: 1196
+        Signature size: 2253
+
+---------------
+tokens: 51
+emissions: 0
+transactions: 53
+total datums: 159</code>
+
+----
+
+{{:1-qin2lf_400x400.jpg?400|}}
+
+====mempool_add_ca: Add pubic certificate into the mempool to prepare its way to chains====
+
+First, create public key using command:
+
+<code>cellframe-node-tool cert create_cert_pkey test_cert test_cert_pub</code> 
+
+Next you should use that public key for adding certificate to mempool:     
+
+<code>cellframe-node-cli mempool_add_ca -net private -chain zero -ca_name test_cert_pub</code>
+
+In cellframe-node you can see message:
+
+<code>Datum with data's hash 0xD1C90C9F902DAB80B85F3C814C00C3FF8F2103E0E32087638D6552CCBBFAB586 was placed in mempool</code>  
+
+You can see certificate in pool (see type_id DATUM_CA):
+
+<code>cellframe-node-cli mempool_list -net private
+private.zero: Found 1 records :
+hash 0xD1C90C9F902DAB80B85F3C814C00C3FF8F2103E0E32087638D6552CCBBFAB586: type_id=DATUM_CA  data_size=1285 data_hash=0xD1C90C9F902DAB80B85F3C814C00C3FF8F2103E0E32087638D6552CCBBFAB586 ts_create=Thu Sep 30 09:40:01 2021
+</code>
+
+----
+
+====mempool_delete: Delete datum with hash <datum hash>====
+
+
+You can also remove a specific hash function with the following command.
+
+<code>cellframe-node-cli mempool_delete -net private -datum 0x16D3ED296B92B5A6C069E2E017801E26FD54691587F500DB4BD0427A5796344E -chain zero
+Datum 0x16D3ED296B92B5A6C069E2E017801E26FD54691587F500DB4BD0427A5796344E deleted</code>
+
+----
+====mempool_list: List mempool entries for selected chain network and chain id====
+
+<code>cellframe-node-cli mempool_list -net kelvin-testnet
+kelvin-testnet.zerochain: Found 1 records :
+hash 0x29A4EE2C7A6881C758D1A3D62ADDF778976F47F8D1D442355ACDF4D60F6E6EBB: type_id=DATUM_TOKEN_DECL  data_size=3411 data_hash=0xF10B17CAC4E18EFBF62564BBC7ECD7A6E76B44F2D2E36A9B6C8641669168CF76 ts_create=Thu Sep 30 08:35:46 2021
+==Datum Token Declaration
+ticker: TICK01
+size: 3411
+type: SIMPLE
+sign_total: 5000
+sign_valid: 123
+total_supply: 5000
+kelvin-testnet.plasma: Not found records</code>
+
+----
+====mempool_proc: Proc mempool entries for selected chain network and chain id====
+
+Example:
+
+<code>cellframe-node-cli mempool_proc -net private -chain zero -datum 0x1F21F5AC0DF225ADDB4C95E25B2F6834617D423A9B5B95734C61E939F7A0F4D3
+hash 0x1F21F5AC0DF225ADDB4C95E25B2F6834617D423A9B5B95734C61E939F7A0F4D3: type_id=DATUM_TOKEN_DECL ts_create=Thu Sep 30 09:02:06 2021
+ data_size=3411
+Datum processed well. Removed datum from mempool</code>
+
+After that you can see, that datum was removed from mempool using command:
+
+Example:
+
+<code>cellframe-node-cli mempool_list -net private -chain zero
+private.zero: Not found records</code>
+
+----
+
+====net: Network commands====
+
+Below you can look at the minimum list of required network commands.
+
+{{:look-down.png?400|}}
+
+<code>cellframe-node-cli net -net kelvin-testnet get status
+    Network "kelvin-testnet" has state NET_STATE_ONLINE (target state NET_STATE_ONLINE), active links 4 from 5, cur node address <node_address></code>
+
+<code>cellframe-node-cli net list
+    Networks:
+      kelvin-testnet</code>
+
+<code>cellframe-node-cli net -net private sync all
+     SYNC_ALL state requested to state machine. Current state: NET_STATE_OFFLINE</code>
+
+<code>cellframe-node-cli net -net core-t sync all
+     SYNC_ALL state requested to state machine. Current state: NET_STATE_LINKS_ESTABLISHED</code>
+
+<code>cellframe-node-cli net -net kelvin-testnet sync all
+     SYNC_ALL state requested to state machine. Current state: NET_STATE_ONLINE</code>
+     
+----
+
+====net_srv: Network services management====
+
+<code>cellframe-node-cli help net_srv
+Network services management:
+net_srv -net <chain net name> order find [-direction <sell|buy>][-srv_uid <Service UID>] [-price_unit <price unit>]\
+                                         [-price_token <Token ticker>] [-price_min <Price minimum>] [-price_max <Price maximum>]
+        Orders list, all or by UID and/or class</code>
+        
+Example:
+
+<code>cellframe-node-cli net_srv -net private order find
+Found 2 orders:
+== Order 0x041BDE40C718DCCC3BC5319F316F52DD249303A1D60C0F0BD09E278CBD74D974 ==
+  version:          2
+  direction:        SERV_DIR_BUY
+  srv_uid:          0x0000000000000003
+  price:            0.0000000 (1)
+  node_addr:        BB65::73DE::553D::E9EA
+  node_location:    None - None
+  tx_cond_hash:     0x0000000000000000000000000000000000000000000000000000000000000000
+  ext:              0x01FFFFFFFF0000000002010000D955BEC7FD940FA2B8C921FCD5FCBE502802F1BA4595316B979FE94F3BDBC9943DD999817EB284AD693E612ACFE1829C7A069FF1FF30B9F4D361B2EE25BDB41801FFFFFFFF00000000020100001DD01E7B6367F965960B23C5231F2B54D3921734514DF6B0BB221AF5FD8DB4C6FD5A5A934FF1CFA79C3808FDE1C34C8A72FCADCBB969010C5C139D153BDA9B8415F2B801000000000000000000A002408175F97F0000
+
+== Order 0xEC5368636BBF903F628964BBD9B0956A7B247E5BCD9C1F222C223F5662059A88 ==
+  version:          2
+  direction:        SERV_DIR_BUY
+  srv_uid:          0x0000000000000003
+  price:            0.0000000 (1)
+  node_addr:        BB65::73DE::553D::E9EA
+  node_location:    None - None
+  tx_cond_hash:     0x0000000000000000000000000000000000000000000000000000000000000000
+  ext:              0x01FFFFFFFF0000000002010000D955BEC7FD940FA2B8C921FCD5FCBE502802F1BA4595316B979FE94F3BDBC9943DD999817EB284AD693E612ACFE1829C7A069FF1FF30B9F4D361B2EE25BDB41801FFFFFFFF00000000020100001DD01E7B6367F965960B23C5231F2B54D3921734514DF6B0BB221AF5FD8DB4C6FD5A5A934FF1CFA79C3808FDE1C34C8A72FCADCBB969010C5C139D153BDA9B8415F2B801000000000000000000A002408175F97F0000</code>
+  
+<code>net_srv -net <chain net name> order delete -hash <Order hash>
+        Order delete</code>
+
+<code>net_srv -net <chain net name> order dump -hash <Order hash>
+        Order dump info</code>
+
+Example:
+
+<code>cellframe-node-cli net_srv -net private order dump -hash 0xEC5368636BBF903F628964BBD9B0956A7B247E5BCD9C1F222C223F5662059A88
+        == Order 0xEC5368636BBF903F628964BBD9B0956A7B247E5BCD9C1F222C223F5662059A88 ==
+          version:          2
+          direction:        SERV_DIR_BUY
+          srv_uid:          0x0000000000000003
+          price:            0.0000000 (1)
+          node_addr:        BB65::73DE::553D::E9EA
+          node_location:    None - None
+          tx_cond_hash:     0x0000000000000000000000000000000000000000000000000000000000000000
+          ext:              0x01FFFFFFFF0000000002010000D955BEC7FD940FA2B8C921FCD5FCBE502802F1BA4595316B979FE94F3BDBC9943DD999817EB284AD693E612ACFE1829C7A069FF1FF30B9F4D361B2EE25BDB41801FFFFFFFF00000000020100001DD01E7B6367F965960B23C5231F2B54D3921734514DF6B0BB221AF5FD8DB4C6FD5A5A934FF1CFA79C3808FDE1C34C8A72FCADCBB969010C5C139D153BDA9B8415F2B801000000000000000000A002408175F97F0000</code>
+          
+Order create:
+
+<code>net_srv -net <chain net name> order create -direction <sell|buy> -srv_uid <Service UID> -price <Price>\
+        -price_unit <Price Unit> -price_token <Token ticker> [-node_addr <Node Address>] [-tx_cond <TX Cond Hash>] \
+        [-expires <Unix time when expires>] [-ext <Extension with params>]\
+        [-cert <cert name to sign order>]\</code>
+        
+Static nodelist create/delete:
+
+<code>net_srv -net <chain net name> order static [save | delete]\</code> 
+
+Check the availability of orders
+
+<code>net_srv -net <chain net name> order recheck</code> 
+
+----
+
+====node: Work with node====
+
+<code>node add  -net <net name> -addr {<node address> | -alias <node alias>} {-port <port>} -cell <cell id>  {-ipv4 <ipv4 external address> | -ipv6 <ipv6 external address>}</code>
+
+A small selection of examples of working with node. 
+
+<code>cellframe-node-cli node add -net core-t -addr 0000::0000::0000::0003 -cell 0 -ipv4 104.248.41.92
+node added</code>       
+
+<code>node del  -net <net name> -addr <node address> | -alias <node alias></code>  
+
+<code>cellframe-node-cli.exe node del -net core-t -addr 0000::0000::0000::0003
+     node deleted
+
+node link {add|del}  -net <net name> {-addr <node address> | -alias <node alias>} -link <node address>
+node alias -addr <node address> -alias <node alias>
+node connect {<node address> | -alias <node alias> | auto}
+node handshake {<node address> | -alias <node alias>}
+node dump -net <net name> [ -addr <node address> | -alias <node alias>] [-full]</code>  
+
+<code>cellframe-node-cli node dump -net kelvin-testnet
+
+Node dump:
+Got 12 records:
+node address 890B::E11F::34F5::4A87     cell 0x0000000000000000 ipv4 0.0.0.0    port: 8079      number of links 0
+node address 1B4B::4160::66E5::D864     cell 0x0000000000000000 ipv4 0.0.0.0    port: 8079      number of links 0
+node address FD11::53AE::2C0E::72C1     cell 0x0000000000000000 ipv4 0.0.0.0    port: 8079      number of links 0
+node address 41CB::CCDE::96E8::32F9     cell 0x0000000000000000 ipv4 0.0.0.0    port: 8079      number of links 0
+node address 67BC::C114::26F1::2731     cell 0x0000000000000000 ipv4 0.0.0.0    port: 8079      number of links 0
+node address EE60::5770::CEEC::5390     cell 0x0000000000000000 ipv4 109.229.69.158     port: 8079      number of links 0
+node address 68D9::0F8B::5D1F::6FA3     cell 0x0000000000000000 ipv4 0.0.0.0    port: 8079      number of links 0
+node address FFFF::0000::0000::0001     cell 0x0000000000000000 ipv4 104.248.201.95     port: 8079      number of links 0
+node address FFFF::0000::0000::0002     cell 0x0000000000000000 ipv4 167.99.133.102     port: 8079      number of links 0
+node address FFFF::0000::0000::0003     cell 0x0000000000000000 ipv4 159.65.24.58       port: 8079      number of links 0
+node address FFFF::0000::0000::0004     cell 0x0000000000000000 ipv4 67.207.80.51       port: 8079      number of links 0
+node address FFFF::0000::0000::0005     cell 0x0000000000000000 ipv4 157.230.173.166    port: 8079      number of links 0</code>     
+
+----
+
+===ping: Send ICMP ECHO_REQUEST to network hosts====
+
+If you want to use this command from under windows, you will not succeed. You must take node IP-address from cellframe-node-cli node dump command
+
+Example:
+
+<code>cellframe-node-cli ping 167.99.133.102
+ping 167.99.133.102 time=91.2 ms</code>
+
+----
+
+====print_log: Print log info====
+
+ts_after - time in timestamp format (seconds count from 01.01.1970)
+limit - output lines count
+
+<code>cellframe-node-cli print_log ts_after 1641886241 limit 100
+
+[01/11/22-10:19:12] [DBG] [dap_config] Looking for config name cellframe-node...
+[01/11/22-10:19:12] [DBG] [dap_config] Opened config cellframe-node
+[01/11/22-10:19:12] [DBG] [main] Parsing command line args
+[01/11/22-10:19:12] [ATT] [main] *** DEBUG MODE ***
+[01/11/22-10:19:12] [DAP] [main] *** CellFrame Node version: 5-1.1 ***
+[01/11/22-10:19:12] [ * ] [dap_events_socket] Initialized events socket module
+[01/11/22-10:19:12] [ * ] [dap_timerfd] Initialized timerfd</code>
+
